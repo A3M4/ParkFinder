@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import android.os.Handler;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -32,6 +33,8 @@ public class AtYourService extends AppCompatActivity {
     private static final String API_KEY = "dee01750-af1d-11ed-887f-351785f052d5";
     private static final String TAG = "AtYourService";
     public Button searchButton;
+    public ProgressBar loadingCircle;
+    public TextView loadingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +47,15 @@ public class AtYourService extends AppCompatActivity {
 
         zipCode = findViewById(R.id.input);
         searchButton = findViewById(R.id.search_button);
+        loadingCircle = findViewById(R.id.loadingCircle);
+        loadingText = findViewById(R.id.loadingText);
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 search();
+                loadingCircle.setVisibility(View.VISIBLE);
+                loadingText.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -126,6 +134,8 @@ public class AtYourService extends AppCompatActivity {
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             }
+                            loadingCircle.setVisibility(View.INVISIBLE);
+                            loadingText.setVisibility(View.INVISIBLE);
                         }
                     });
                 }

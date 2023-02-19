@@ -31,8 +31,8 @@
 
     <TextView
         android:id="@+id/city"
-        android:layout_width="129dp"
-        android:layout_height="24dp"
+        android:layout_width="203dp"
+        android:layout_height="30dp"
         android:text="@string/city"
         app:layout_constraintBottom_toTopOf="@id/state"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,8 +41,8 @@
 
     <TextView
         android:id="@+id/state"
-        android:layout_width="129dp"
-        android:layout_height="24dp"
+        android:layout_width="203dp"
+        android:layout_height="30dp"
         android:text="@string/state"
         app:layout_constraintBottom_toTopOf="@id/country"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,8 +51,8 @@
 
     <TextView
         android:id="@+id/country"
-        android:layout_width="129dp"
-        android:layout_height="24dp"
+        android:layout_width="203dp"
+        android:layout_height="30dp"
         android:text="@string/country"
         app:layout_constraintBottom_toTopOf="@id/latitude"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,8 +61,8 @@
 
     <TextView
         android:id="@+id/latitude"
-        android:layout_width="129dp"
-        android:layout_height="24dp"
+        android:layout_width="203dp"
+        android:layout_height="30dp"
         android:text="@string/latitude"
         app:layout_constraintBottom_toTopOf="@id/longitude"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +71,8 @@
 
     <TextView
         android:id="@+id/longitude"
-        android:layout_width="129dp"
-        android:layout_height="24dp"
+        android:layout_width="203dp"
+        android:layout_height="30dp"
         android:text="@string/longitude"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

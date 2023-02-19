@@ -65,11 +65,11 @@ public class AtYourService extends AppCompatActivity {
     }
 
     private class GetRequest {
-        TextView city = (TextView) findViewById(R.id.city);
-        TextView state = (TextView) findViewById(R.id.state);
-        TextView country = (TextView) findViewById(R.id.country);
-        TextView latitude = (TextView) findViewById(R.id.latitude);
-        TextView longitude = (TextView) findViewById(R.id.longitude);
+        TextView city = findViewById(R.id.city);
+        TextView state = findViewById(R.id.state);
+        TextView country = findViewById(R.id.country);
+        TextView latitude = findViewById(R.id.latitude);
+        TextView longitude = findViewById(R.id.longitude);
         Handler handler = new Handler();
 
         public void execute(String... params) {
@@ -102,11 +102,11 @@ public class AtYourService extends AppCompatActivity {
                             try {
                                 query_zip = result.getJSONObject("query").getJSONArray("codes").get(0).toString();
                                 Log.d("test zip", query_zip);
-                                country.setText("USA");
-                                latitude.setText(result.getJSONObject("results").getJSONArray(query_zip).getJSONObject(0).getString("latitude"));
-                                longitude.setText(result.getJSONObject("results").getJSONArray(query_zip).getJSONObject(0).getString("longitude"));
-                                city.setText(result.getJSONObject("results").getJSONArray(query_zip).getJSONObject(0).getString("city"));
-                                state.setText(result.getJSONObject("results").getJSONArray(query_zip).getJSONObject(0).getString("state"));
+                                city.setText("City: " + result.getJSONObject("results").getJSONArray(query_zip).getJSONObject(0).getString("city"));
+                                state.setText("State: " + result.getJSONObject("results").getJSONArray(query_zip).getJSONObject(0).getString("state"));
+                                country.setText("Country: USA");
+                                latitude.setText("Latitude: " + result.getJSONObject("results").getJSONArray(query_zip).getJSONObject(0).getString("latitude"));
+                                longitude.setText("Longitude: " + result.getJSONObject("results").getJSONArray(query_zip).getJSONObject(0).getString("longitude"));
                             } catch (JSONException e) {
                                 Log.d("onPost Error", "invalid zip code");
                                 city.setText(":");
@@ -117,7 +117,7 @@ public class AtYourService extends AppCompatActivity {
 
                                 final AlertDialog.Builder builder = new AlertDialog.Builder(AtYourService.this);
                                 builder.setMessage("Invalid ZIP Code \nPlease enter a valid 5-digit US ZIP code.");
-                                builder.setNegativeButton("We receive your input now", new DialogInterface.OnClickListener() {
+                                builder.setNegativeButton("Please try it again", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.cancel();
@@ -157,12 +157,30 @@ public class AtYourService extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        setContentView(R.layout.activity_at_your_service);
+        TextView city = findViewById(R.id.city);
+        TextView state = findViewById(R.id.state);
+        TextView country = findViewById(R.id.country);
+        TextView latitude = findViewById(R.id.latitude);
+        TextView longitude = findViewById(R.id.longitude);
+        savedInstanceState.putString("city", city.getText().toString());
+        savedInstanceState.putString("state", state.getText().toString());
+        savedInstanceState.putString("country", country.getText().toString());
+        savedInstanceState.putString("latitude", latitude.getText().toString());
+        savedInstanceState.putString("longitude", longitude.getText().toString());
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        setContentView(R.layout.activity_at_your_service);
+        TextView city = findViewById(R.id.city);
+        TextView state = findViewById(R.id.state);
+        TextView country = findViewById(R.id.country);
+        TextView latitude = findViewById(R.id.latitude);
+        TextView longitude = findViewById(R.id.longitude);
+        city.setText(savedInstanceState.getString("city"));
+        state.setText(savedInstanceState.getString("state"));
+        country.setText(savedInstanceState.getString("country"));
+        latitude.setText(savedInstanceState.getString("latitude"));
+        longitude.setText(savedInstanceState.getString("longitude"));
     }
 }

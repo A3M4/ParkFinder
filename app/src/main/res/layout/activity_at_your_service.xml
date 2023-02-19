@@ -8,16 +8,26 @@
 
     <EditText
         android:id="@+id/input"
-        android:layout_width="270dp"
-        android:layout_height="66dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:hint="@string/please_enter_a_us_zip_code"
         android:inputType="number"
         android:maxLength="5"
-        app:layout_constraintBottom_toTopOf="@id/city"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/search_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.195"/>
 
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search"
+        app:layout_constraintStart_toEndOf="@+id/input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/input"
+        app:layout_constraintBottom_toBottomOf="@+id/input" />
 
     <TextView
         android:id="@+id/city"

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class AtYourService extends AppCompatActivity {
     private static final String URL_PREFIX = "https://app.zipcodebase.com/api/v1/search?apikey=%&country=us&codes=";
     private static final String API_KEY = "dee01750-af1d-11ed-887f-351785f052d5";
     private static final String TAG = "AtYourService";
+    public Button searchButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,13 @@ public class AtYourService extends AppCompatActivity {
         }
 
         zipCode = findViewById(R.id.input);
+        searchButton = findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search(v);
+            }
+        });
     }
 
     public void search(View view) {

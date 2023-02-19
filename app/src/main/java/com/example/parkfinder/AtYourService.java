@@ -1,6 +1,5 @@
 package com.example.parkfinder;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import android.os.Handler;
@@ -17,16 +17,22 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class AtYourService extends AppCompatActivity {
     public EditText zipCode;
     private static final String URL_PREFIX = "https://app.zipcodebase.com/api/v1/search?apikey=%&country=us&codes=";
     private static final String API_KEY = "dee01750-af1d-11ed-887f-351785f052d5";
     private static final String TAG = "AtYourService";
     public Button searchButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +47,21 @@ public class AtYourService extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                search(v);
+                search();
             }
         });
     }
 
-    public void search(View view) {
+    public void search() {
+        GetRequest getRequest = new GetRequest();
         String zip = zipCode.getText().toString();
         String url = URL_PREFIX.replace("%", API_KEY) + zip;
+        try {
+            getRequest.execute(url);
+        } catch (Exception e) {
+            Log.e(TAG, "Exception");
+            e.printStackTrace();
+        }
     }
 
     private class GetRequest {
@@ -120,7 +133,36 @@ public class AtYourService extends AppCompatActivity {
         }
     }
 
-    private static String httpResponse(URL url) throws IOException {
-        return null;
+    public static String httpResponse(URL url) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setDoInput(true);
+        connection.connect();
+
+        InputStream stream = connection.getInputStream();
+        StringBuilder builder = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                builder.append(line).append(",\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return builder.toString();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        setContentView(R.layout.activity_at_your_service);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        setContentView(R.layout.activity_at_your_service);
     }
 }

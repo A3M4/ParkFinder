@@ -10,4 +10,7 @@
     <string name="longitude">Longitude</string>
     <string name="search">Search</string>
     <string name="loading">Loading</string>
+    <string name="about">About</string>
+    <string name="team_member">- Tianqi Jin\n- Wenzhu Chen\n- Liyuan Cao\n- Yifeng Li
+</string>
 </resources>

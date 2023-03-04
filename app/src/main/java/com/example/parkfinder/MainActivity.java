@@ -24,4 +24,9 @@ public class MainActivity extends AppCompatActivity {
         Intent aboutIntent = new Intent(this, About.class);
         startActivity(aboutIntent);
     }
+
+    public void openStickItToEm(View view) {
+        Intent stickerIntent = new Intent(this, StickItToEm.class);
+        startActivity(stickerIntent);
+    }
 }

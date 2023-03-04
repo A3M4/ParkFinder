@@ -15,4 +15,6 @@
     <string name="stick_it_to_em">Stick It To Em</string>
     <string name="enter_username">Please enter your username</string>
     <string name="sign_in">Sign in</string>
+    <string name="welcome_info">Welcome, \t</string>
+    <string name="select_sticker">Please select a sticker you want to send: </string>
 </resources>

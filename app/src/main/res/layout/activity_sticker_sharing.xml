@@ -1,85 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".StickerSharing">
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/welcomeInfo"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/share_sticker_page"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_info"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.049" />
+        android:paddingBottom="100dp"
+        tools:context=".StickerSharing">
 
-    <TextView
-        android:id="@+id/select_sticker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/select_sticker"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeInfo"
-        app:layout_constraintVertical_bias="0.027" />
+        <TextView
+            android:id="@+id/welcomeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_info"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.125"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.049" />
 
-    <ImageView
-        android:id="@+id/sticker_crocodile"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:clickable="true"
-        android:onClick="clickSticker"
-        android:contentDescription="@string/sticker_of_crocodile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toEndOf="@+id/sticker_bee"
-        app:layout_constraintTop_toTopOf="@+id/sticker_bee"
-        app:srcCompat="@drawable/crocodile" />
+        <TextView
+            android:id="@+id/select_sticker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_sticker"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeInfo"
+            app:layout_constraintVertical_bias="0.05" />
 
-    <ImageView
-        android:id="@+id/sticker_bee"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="25dp"
-        android:clickable="true"
-        android:onClick="clickSticker"
-        android:contentDescription="@string/sticker_of_bee"
-        app:layout_constraintBaseline_toTopOf="@string/select_sticker"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.35"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_sticker"
-        app:srcCompat="@drawable/bee" />
+        <ImageView
+            android:id="@+id/sticker_crocodile"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:clickable="true"
+            android:contentDescription="@string/sticker_of_crocodile"
+            android:onClick="clickSticker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toEndOf="@+id/sticker_bee"
+            app:layout_constraintTop_toTopOf="@+id/sticker_bee"
+            app:srcCompat="@drawable/crocodile" />
 
-    <ImageView
-        android:id="@+id/sticker_fox"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:clickable="true"
-        android:onClick="clickSticker"
-        android:contentDescription="@string/sticker_of_fox"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/sticker_bee"
-        app:layout_constraintTop_toBottomOf="@+id/sticker_bee"
-        app:layout_constraintVertical_bias="0.1"
-        app:srcCompat="@drawable/fox" />
+        <ImageView
+            android:id="@+id/sticker_bee"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:contentDescription="@string/sticker_of_bee"
+            android:onClick="clickSticker"
+            app:layout_constraintBaseline_toTopOf="@string/select_sticker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.35"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/select_sticker"
+            app:srcCompat="@drawable/bee" />
 
-    <ImageView
-        android:id="@+id/sticker_panda"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:clickable="true"
-        android:onClick="clickSticker"
-        android:contentDescription="@string/sticker_of_panda"
-        app:layout_constraintStart_toStartOf="@+id/sticker_crocodile"
-        app:layout_constraintTop_toTopOf="@+id/sticker_fox"
-        app:srcCompat="@drawable/panda" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/sticker_fox"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:clickable="true"
+            android:contentDescription="@string/sticker_of_fox"
+            android:onClick="clickSticker"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/sticker_bee"
+            app:layout_constraintTop_toBottomOf="@+id/sticker_bee"
+            app:layout_constraintVertical_bias="0.2"
+            app:srcCompat="@drawable/fox" />
+
+        <ImageView
+            android:id="@+id/sticker_panda"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:clickable="true"
+            android:contentDescription="@string/sticker_of_panda"
+            android:onClick="clickSticker"
+            app:layout_constraintStart_toStartOf="@+id/sticker_crocodile"
+            app:layout_constraintTop_toTopOf="@+id/sticker_fox"
+            app:srcCompat="@drawable/panda" />
+
+        <TextView
+            android:id="@+id/txt_select_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_receiver"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/select_sticker"
+            app:layout_constraintTop_toBottomOf="@+id/sticker_fox"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <Spinner
+            android:id="@+id/spinner_select_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/select"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_select_receiver"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_select_receiver"
+            app:layout_constraintTop_toTopOf="@+id/txt_select_receiver" />
+
+        <Button
+            android:id="@+id/send_sticker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="sendSticker"
+            android:text="@string/send"
+            android:layout_marginTop="7dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_select_receiver" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

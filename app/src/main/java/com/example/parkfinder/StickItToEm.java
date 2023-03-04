@@ -26,17 +26,18 @@ public class StickItToEm extends AppCompatActivity {
         EditText userInput = findViewById(R.id.editTextUserName);
         String userName = userInput.getText().toString();
         if (userName.isEmpty()) {
-            Toast.makeText(this, "Please enter a non-empty username.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Please enter a non-empty username.", Toast.LENGTH_LONG).show();
             return;
         }
 
         User user = new User(userName);
         // add user to database, use the username as the key
         dbReference.child("users").child(userName).setValue(user);
-        Toast.makeText(this, "Sign in successfully.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Sign in successfully.", Toast.LENGTH_LONG).show();
 
         Intent stickerIntent = new Intent(this, StickerSharing.class);
         stickerIntent.putExtra("username", userName);
         startActivity(stickerIntent);
     }
+
 }

@@ -26,7 +26,56 @@
         android:layout_height="wrap_content"
         android:text="@string/select_sticker"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/welcomeInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeInfo"
         app:layout_constraintVertical_bias="0.027" />
+
+    <ImageView
+        android:id="@+id/sticker_crocodile"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:clickable="true"
+        android:onClick="clickSticker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toEndOf="@+id/sticker_bee"
+        app:layout_constraintTop_toTopOf="@+id/sticker_bee"
+        app:srcCompat="@drawable/crocodile" />
+
+    <ImageView
+        android:id="@+id/sticker_bee"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="25dp"
+        android:clickable="true"
+        android:onClick="clickSticker"
+        app:layout_constraintBaseline_toTopOf="@string/select_sticker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_sticker"
+        app:srcCompat="@drawable/bee" />
+
+    <ImageView
+        android:id="@+id/sticker_fox"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:clickable="true"
+        android:onClick="clickSticker"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/sticker_bee"
+        app:layout_constraintTop_toBottomOf="@+id/sticker_bee"
+        app:layout_constraintVertical_bias="0.1"
+        app:srcCompat="@drawable/fox" />
+
+    <ImageView
+        android:id="@+id/sticker_panda"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:clickable="true"
+        android:onClick="clickSticker"
+        app:layout_constraintStart_toStartOf="@+id/sticker_crocodile"
+        app:layout_constraintTop_toTopOf="@+id/sticker_fox"
+        app:srcCompat="@drawable/panda" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_sticker"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,8 +77,8 @@
             android:onClick="clickSticker"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/sticker_bee"
-            app:layout_constraintTop_toBottomOf="@+id/sticker_bee"
-            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintTop_toBottomOf="@+id/txt_bee_cnt"
+            app:layout_constraintVertical_bias="0.1"
             app:srcCompat="@drawable/fox" />
 
         <ImageView
@@ -97,11 +97,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_receiver"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/select_sticker"
-            app:layout_constraintTop_toBottomOf="@+id/sticker_fox"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_fox_cnt"
+            app:layout_constraintVertical_bias="0.25" />
 
         <Spinner
             android:id="@+id/spinner_select_receiver"
@@ -117,13 +117,48 @@
             android:id="@+id/send_sticker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:onClick="sendSticker"
             android:text="@string/send"
-            android:layout_marginTop="7dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_select_receiver" />
+
+        <TextView
+            android:id="@+id/txt_bee_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_count"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/sticker_bee"
+            app:layout_constraintTop_toBottomOf="@+id/sticker_bee" />
+
+        <TextView
+            android:id="@+id/txt_crocodile_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_count"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/sticker_crocodile"
+            app:layout_constraintTop_toBottomOf="@+id/sticker_crocodile" />
+
+        <TextView
+            android:id="@+id/txt_fox_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_count"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/sticker_fox"
+            app:layout_constraintTop_toBottomOf="@+id/sticker_fox" />
+
+        <TextView
+            android:id="@+id/txt_panda_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_count"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/sticker_panda"
+            app:layout_constraintTop_toBottomOf="@+id/sticker_panda" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

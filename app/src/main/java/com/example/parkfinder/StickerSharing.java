@@ -1,9 +1,8 @@
 package com.example.parkfinder;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,10 +28,11 @@ public class StickerSharing extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private Spinner receiverSpinner;
     private String receiverUsername;
-    private Map<ImageView, StickerType> stickerImageViewToType = new HashMap<>();
     private StickerType selectedStickerType;
+    private final Map<ImageView, StickerType> stickerImageViewToType = new HashMap<>();
     private final String FIREBASE_TAG = "FIREBASE";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +46,7 @@ public class StickerSharing extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         initReceiverList();
         initStickerImageViewToTypeMap();
+        showSendingCount();
 
     }
 
@@ -70,8 +68,12 @@ public class StickerSharing extends AppCompatActivity {
                     if (!task.isSuccessful()) {
                         Log.e(FIREBASE_TAG, "Error getting receiver list", task.getException());
                     } else {
-                        HashMap usernameToUser = (HashMap) task.getResult().getValue();
-                        Set receiverSet = usernameToUser.keySet();
+                        if (task.getResult().getValue() == null) {
+                            return;
+                        }
+                        HashMap<String, User> usernameToUser =
+                                (HashMap) task.getResult().getValue();
+                        Set<String> receiverSet = usernameToUser.keySet();
                         receiverSet.remove(curUsername);
                         Log.d(FIREBASE_TAG, receiverSet.toString());
                         receiverSpinner = findViewById(R.id.spinner_select_receiver);
@@ -84,9 +86,61 @@ public class StickerSharing extends AppCompatActivity {
 
     private void initStickerImageViewToTypeMap() {
         stickerImageViewToType.put((ImageView) findViewById(R.id.sticker_bee), StickerType.BEE);
-        stickerImageViewToType.put((ImageView) findViewById(R.id.sticker_crocodile), StickerType.CROCODILE);
+        stickerImageViewToType.put((ImageView) findViewById(R.id.sticker_crocodile),
+                StickerType.CROCODILE);
         stickerImageViewToType.put((ImageView) findViewById(R.id.sticker_fox), StickerType.FOX);
         stickerImageViewToType.put((ImageView) findViewById(R.id.sticker_panda), StickerType.PANDA);
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private void showSendingCount() {
+        TextView sentBeeCnt = findViewById(R.id.txt_bee_cnt);
+        TextView sentCrocodileCnt = findViewById(R.id.txt_crocodile_cnt);
+        TextView sentFoxCnt = findViewById(R.id.txt_fox_cnt);
+        TextView sentPandaCnt = findViewById(R.id.txt_panda_cnt);
+
+        databaseReference.child("sent")
+                .child(curUsername)
+                .get().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e(FIREBASE_TAG, "Error reading all sending counts",
+                                task.getException());
+                    } else {
+                        HashMap<String, String> typeToCount = (HashMap) task.getResult().getValue();
+                        if (typeToCount == null) {
+                            sentBeeCnt.setText("Already Sent: 0");
+                            sentCrocodileCnt.setText("Already Sent: 0");
+                            sentFoxCnt.setText("Already Sent: 0");
+                            sentPandaCnt.setText("Already Sent: 0");
+                        } else {
+                            if (typeToCount.containsKey(StickerType.BEE.toString())) {
+                                sentBeeCnt.setText(
+                                        "Already Sent: " + typeToCount.get(StickerType.BEE.toString()));
+                            } else {
+                                sentBeeCnt.setText("Already Sent: 0");
+                            }
+                            if (typeToCount.containsKey(StickerType.CROCODILE.toString())) {
+                                sentCrocodileCnt.setText("Already Sent: " +
+                                        typeToCount.get(StickerType.CROCODILE.toString()));
+                            } else {
+                                sentCrocodileCnt.setText("Already Sent: 0");
+                            }
+                            if (typeToCount.containsKey(StickerType.FOX.toString())) {
+                                sentFoxCnt.setText(
+                                        "Already Sent: " + typeToCount.get(StickerType.FOX.toString()));
+                            } else {
+                                sentFoxCnt.setText("Already Sent: 0");
+                            }
+                            if (typeToCount.containsKey(StickerType.PANDA.toString())) {
+                                sentPandaCnt.setText(
+                                        "Already Sent: " + typeToCount.get(StickerType.PANDA.toString()));
+                            } else {
+                                sentPandaCnt.setText("Already Sent: 0");
+                            }
+                        }
+                    }
+                });
     }
 
 
@@ -137,6 +191,7 @@ public class StickerSharing extends AppCompatActivity {
                                         " " +
                                         "is: " +
                                         newCount);
+                        showSendingCount();
                         Toast.makeText(this, "Send successfully.", Toast.LENGTH_LONG).show();
                     }
                 });

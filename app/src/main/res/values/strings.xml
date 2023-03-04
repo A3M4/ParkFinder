@@ -24,4 +24,5 @@
     <string name="select_receiver">Please select a receiver:</string>
     <string name="send">Send</string>
     <string name="select">select</string>
+    <string name="send_count">Send count</string>
 </resources>

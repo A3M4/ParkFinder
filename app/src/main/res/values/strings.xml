@@ -17,4 +17,8 @@
     <string name="sign_in">Sign in</string>
     <string name="welcome_info">Welcome, \t</string>
     <string name="select_sticker">Please select a sticker you want to send: </string>
+    <string name="sticker_of_fox">sticker of fox</string>
+    <string name="sticker_of_crocodile">sticker of crocodile</string>
+    <string name="sticker_of_bee">sticker of bee</string>
+    <string name="sticker_of_panda">sticker of panda</string>
 </resources>

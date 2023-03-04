@@ -103,10 +103,10 @@ public class StickerSharing extends AppCompatActivity {
                 new StickerRecord(selectedStickerType, curUsername, receiverUsername, curTime);
 
         addSendingCountToDatabase();
-
+        addReceivingRecordToDatabase(record);
     }
 
-    // add sending record to database, path: sent/username/{strStickerType: strCount}
+    // add sending record to database, path: sent/username/strStickerType/strCount
     private void addSendingCountToDatabase() {
         databaseReference.child("sent")
                 .child(curUsername)
@@ -140,5 +140,14 @@ public class StickerSharing extends AppCompatActivity {
                         Toast.makeText(this, "Send successfully.", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    // add receiving record to database, path: received/receiverUsername/autoUid/stickerRecord
+    private void addReceivingRecordToDatabase(StickerRecord record) {
+        databaseReference.child("received")
+                .child(receiverUsername)
+                .push()
+                .setValue(record);
+        Log.d(FIREBASE_TAG, record.getCompleteRecord());
     }
 }

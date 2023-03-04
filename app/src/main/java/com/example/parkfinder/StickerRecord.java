@@ -29,4 +29,16 @@ public class StickerRecord {
     public String getTime() {
         return time;
     }
+
+    public String getCompleteRecord (){
+        StringBuilder builder = new StringBuilder();
+        builder.append(receiverUsername)
+                .append(" received a sticker of ")
+                .append(stickerType)
+                .append(" from ")
+                .append(senderUsername)
+                .append(" at ")
+                .append(time);
+        return builder.toString();
+    }
 }

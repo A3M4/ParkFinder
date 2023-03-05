@@ -3,6 +3,7 @@ package com.example.parkfinder;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -204,5 +205,11 @@ public class StickerSharing extends AppCompatActivity {
                 .push()
                 .setValue(record);
         Log.d(FIREBASE_TAG, record.getCompleteRecord());
+    }
+
+    // get the received stickers history for current user
+    public void getReceivingHistory(View view) {
+        Intent historyIntent = new Intent(this, StickerReceivingHistory.class);
+        startActivity(historyIntent);
     }
 }

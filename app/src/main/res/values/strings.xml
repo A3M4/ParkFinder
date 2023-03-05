@@ -25,4 +25,5 @@
     <string name="send">Send</string>
     <string name="select">select</string>
     <string name="send_count">Send count</string>
+    <string name="receiving_history">Receiving History</string>
 </resources>

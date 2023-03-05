@@ -3,9 +3,16 @@ package com.example.parkfinder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +51,15 @@ public class StickerSharing extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //create NotificationChannel for newer version Android
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+
         curUsername = getIntent().getExtras().getString("username");
         setContentView(R.layout.activity_sticker_sharing);
 
@@ -72,6 +88,18 @@ public class StickerSharing extends AppCompatActivity {
                                 Log.d(FIREBASE_TAG, "I am a receiver， received record: " +
                                         newReceivedRecord.getCompleteRecord());
                                 // todo: add send notification here (must skip the first one when log in)
+                                NotificationCompat.Builder builder = new NotificationCompat.Builder(StickerSharing.this, "My Notification");
+                                builder.setContentTitle("New Sticker Notification");
+                                builder.setContentText("Hello, " + curUsername + ", you received a new sticker!");
+                                builder.setSmallIcon(R.drawable.ic_new_notification);
+                                builder.setAutoCancel(true);
+
+                                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(StickerSharing.this);
+                                if (ActivityCompat.checkSelfPermission(StickerSharing.this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                                    // TODO: Consider calling
+                                    return;
+                                }
+                                managerCompat.notify(1, builder.build());
                             }
 
                             @Override

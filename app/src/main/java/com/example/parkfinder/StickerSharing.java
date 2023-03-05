@@ -12,6 +12,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +48,9 @@ public class StickerSharing extends AppCompatActivity {
     private Spinner receiverSpinner;
     private String receiverUsername;
     private StickerType selectedStickerType;
+    private boolean isFirstNotification = true;
     private final Map<ImageView, StickerType> stickerImageViewToType = new HashMap<>();
+    private final Map<StickerType, Bitmap> stickerTypeToBitmap = new HashMap<>();
     static final String FIREBASE_TAG = "FIREBASE";
 
     @SuppressLint("SetTextI18n")
@@ -54,7 +60,9 @@ public class StickerSharing extends AppCompatActivity {
 
         //create NotificationChannel for newer version Android
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel =
+                    new NotificationChannel("My Notification", "My Notification",
+                            NotificationManager.IMPORTANCE_HIGH);
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
@@ -72,6 +80,7 @@ public class StickerSharing extends AppCompatActivity {
         initStickerImageViewToTypeMap();
         showSendingCount();
 
+        getSickerTypeToBitmap();
         getReceivedDataChange();
     }
 
@@ -85,21 +94,35 @@ public class StickerSharing extends AppCompatActivity {
                                                      @Nullable String previousChildName) {
                                 StickerRecord newReceivedRecord =
                                         snapshot.getValue(StickerRecord.class);
-                                Log.d(FIREBASE_TAG, "I am a receiver， received record: " +
-                                        newReceivedRecord.getCompleteRecord());
-                                // todo: add send notification here (must skip the first one when log in)
-                                NotificationCompat.Builder builder = new NotificationCompat.Builder(StickerSharing.this, "My Notification");
-                                builder.setContentTitle("New Sticker Notification");
-                                builder.setContentText("Hello, " + curUsername + ", you received a new sticker!");
-                                builder.setSmallIcon(R.drawable.ic_new_notification);
-                                builder.setAutoCancel(true);
+                                if (isFirstNotification) {
+                                    isFirstNotification = false;
+                                } else {
+                                    Log.d(FIREBASE_TAG, "I am a receiver， received record: " +
+                                            newReceivedRecord.getCompleteRecord());
+                                    // send notification
+                                    // cited from: https://developer.android.com/develop/ui/views/notifications/expanded
+                                    NotificationCompat.Builder builder =
+                                            new NotificationCompat.Builder(StickerSharing.this,
+                                                    "My Notification");
+                                    builder.setContentTitle("New Sticker Notification");
+                                    builder.setContentText("Hello, " + curUsername +
+                                            ", you received a new sticker from " +
+                                            newReceivedRecord.getSenderUsername() + "!");
+                                    builder.setSmallIcon(R.drawable.ic_new_notification);
+                                    builder.setLargeIcon(stickerTypeToBitmap.get(
+                                            newReceivedRecord.getStickerType()));
+                                    builder.setAutoCancel(true);
 
-                                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(StickerSharing.this);
-                                if (ActivityCompat.checkSelfPermission(StickerSharing.this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                                    // TODO: Consider calling
-                                    return;
+                                    NotificationManagerCompat managerCompat =
+                                            NotificationManagerCompat.from(StickerSharing.this);
+                                    if (ActivityCompat.checkSelfPermission(StickerSharing.this,
+                                            android.Manifest.permission.POST_NOTIFICATIONS) !=
+                                            PackageManager.PERMISSION_GRANTED) {
+                                        // TODO: Consider calling
+                                        return;
+                                    }
+                                    managerCompat.notify(1, builder.build());
                                 }
-                                managerCompat.notify(1, builder.build());
                             }
 
                             @Override
@@ -126,6 +149,18 @@ public class StickerSharing extends AppCompatActivity {
                         });
     }
 
+
+    private void getSickerTypeToBitmap() {
+        stickerTypeToBitmap.put(StickerType.BEE,
+                BitmapFactory.decodeResource(getResources(), R.drawable.bee));
+        stickerTypeToBitmap.put(StickerType.CROCODILE,
+                BitmapFactory.decodeResource(getResources(), R.drawable.crocodile));
+        stickerTypeToBitmap.put(StickerType.FOX,
+                BitmapFactory.decodeResource(getResources(), R.drawable.fox));
+        stickerTypeToBitmap.put(StickerType.PANDA,
+                BitmapFactory.decodeResource(getResources(), R.drawable.panda));
+    }
+
     // select the sticker clicked
     public void clickSticker(View view) {
         if (selectedStickerImageView != null) {
@@ -139,25 +174,30 @@ public class StickerSharing extends AppCompatActivity {
 
     // init spinner of user list for selecting a sender (excluding themselves)
     private void initReceiverList() {
-        databaseReference.child("users").get().addOnCompleteListener(
-                task -> {
-                    if (!task.isSuccessful()) {
-                        Log.e(FIREBASE_TAG, "Error getting receiver list", task.getException());
-                    } else {
-                        if (task.getResult().getValue() == null) {
-                            return;
-                        }
-                        HashMap<String, User> usernameToUser =
-                                (HashMap) task.getResult().getValue();
-                        Set<String> receiverSet = usernameToUser.keySet();
-                        receiverSet.remove(curUsername);
-                        Log.d(FIREBASE_TAG, receiverSet.toString());
-                        receiverSpinner = findViewById(R.id.spinner_select_receiver);
-                        receiverSpinner.setAdapter(new ArrayAdapter<>(this,
-                                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                                receiverSet.toArray()));
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    return;
+                }
+                List<String> receiverList = new ArrayList<>();
+                for (DataSnapshot username: snapshot.getChildren()) {
+                    if (username.getKey().equals(curUsername)) {
+                        continue;
                     }
-                });
+                    receiverList.add(username.getKey());
+                }
+
+                Log.d(FIREBASE_TAG, receiverList.toString());
+                receiverSpinner = findViewById(R.id.spinner_select_receiver);
+                receiverSpinner.setAdapter(new ArrayAdapter<>(StickerSharing.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, receiverList));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(FIREBASE_TAG, "Error getting receiver list", error.toException());
+            }
+        });
     }
 
     private void initStickerImageViewToTypeMap() {
@@ -178,43 +218,45 @@ public class StickerSharing extends AppCompatActivity {
 
         databaseReference.child("sent")
                 .child(curUsername)
-                .get().addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.e(FIREBASE_TAG, "Error reading all sending counts",
-                                task.getException());
-                    } else {
-                        HashMap<String, String> typeToCount = (HashMap) task.getResult().getValue();
-                        if (typeToCount == null) {
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!snapshot.exists()) {
                             sentBeeCnt.setText("Already Sent: 0");
                             sentCrocodileCnt.setText("Already Sent: 0");
                             sentFoxCnt.setText("Already Sent: 0");
                             sentPandaCnt.setText("Already Sent: 0");
                         } else {
-                            if (typeToCount.containsKey(StickerType.BEE.toString())) {
+                            if (snapshot.hasChild(StickerType.BEE.toString())) {
                                 sentBeeCnt.setText(
-                                        "Already Sent: " + typeToCount.get(StickerType.BEE.toString()));
+                                        "Already Sent: " + snapshot.child(StickerType.BEE.toString()).getValue(String.class));
                             } else {
                                 sentBeeCnt.setText("Already Sent: 0");
                             }
-                            if (typeToCount.containsKey(StickerType.CROCODILE.toString())) {
-                                sentCrocodileCnt.setText("Already Sent: " +
-                                        typeToCount.get(StickerType.CROCODILE.toString()));
+                            if (snapshot.hasChild(StickerType.CROCODILE.toString())) {
+                                sentCrocodileCnt.setText(
+                                        "Already Sent: " + snapshot.child(StickerType.CROCODILE.toString()).getValue(String.class));
                             } else {
                                 sentCrocodileCnt.setText("Already Sent: 0");
                             }
-                            if (typeToCount.containsKey(StickerType.FOX.toString())) {
+                            if (snapshot.hasChild(StickerType.FOX.toString())) {
                                 sentFoxCnt.setText(
-                                        "Already Sent: " + typeToCount.get(StickerType.FOX.toString()));
+                                        "Already Sent: " + snapshot.child(StickerType.FOX.toString()).getValue(String.class));
                             } else {
                                 sentFoxCnt.setText("Already Sent: 0");
                             }
-                            if (typeToCount.containsKey(StickerType.PANDA.toString())) {
+                            if (snapshot.hasChild(StickerType.PANDA.toString())) {
                                 sentPandaCnt.setText(
-                                        "Already Sent: " + typeToCount.get(StickerType.PANDA.toString()));
+                                        "Already Sent: " + snapshot.child(StickerType.PANDA.toString()).getValue(String.class));
                             } else {
                                 sentPandaCnt.setText("Already Sent: 0");
                             }
                         }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.w(FIREBASE_TAG, "Error reading all sending counts", error.toException());
                     }
                 });
     }
@@ -267,7 +309,6 @@ public class StickerSharing extends AppCompatActivity {
                                         " " +
                                         "is: " +
                                         newCount);
-                        showSendingCount();
                         Toast.makeText(this, "Send successfully.", Toast.LENGTH_LONG).show();
                     }
                 });

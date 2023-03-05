@@ -6,6 +6,8 @@ public class StickerRecord {
     private String receiverUsername;
     private String time;
 
+    public StickerRecord(){}
+
     public StickerRecord(StickerType stickerType, String senderUsername, String receiverUsername,
                          String time) {
         this.stickerType = stickerType;
@@ -40,5 +42,16 @@ public class StickerRecord {
                 .append(" at ")
                 .append(time);
         return builder.toString();
+    }
+    public void setStickerType(StickerType stickerType) {
+        this.stickerType = stickerType;
+    }
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

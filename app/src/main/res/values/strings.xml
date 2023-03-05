@@ -26,4 +26,7 @@
     <string name="select">select</string>
     <string name="send_count">Send count</string>
     <string name="receiving_history">Receiving History</string>
+    <string name="received_sticker">received sticker</string>
+    <string name="sender">Sender</string>
+    <string name="time">Time</string>
 </resources>

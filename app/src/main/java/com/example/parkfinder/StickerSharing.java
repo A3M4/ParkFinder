@@ -31,7 +31,7 @@ public class StickerSharing extends AppCompatActivity {
     private String receiverUsername;
     private StickerType selectedStickerType;
     private final Map<ImageView, StickerType> stickerImageViewToType = new HashMap<>();
-    private final String FIREBASE_TAG = "FIREBASE";
+    static final String FIREBASE_TAG = "FIREBASE";
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -210,6 +210,7 @@ public class StickerSharing extends AppCompatActivity {
     // get the received stickers history for current user
     public void getReceivingHistory(View view) {
         Intent historyIntent = new Intent(this, StickerReceivingHistory.class);
+        historyIntent.putExtra("curUsername", curUsername);
         startActivity(historyIntent);
     }
 }

@@ -28,4 +28,9 @@ public class MainActivity extends AppCompatActivity {
         Intent stickerIntent = new Intent(this, StickItToEm.class);
         startActivity(stickerIntent);
     }
+
+    public void openNationalParks(View view) {
+        Intent parkIntent = new Intent(this, NationalParks.class);
+        startActivity(parkIntent);
+    }
 }

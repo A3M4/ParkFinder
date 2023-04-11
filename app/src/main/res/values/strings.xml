@@ -29,4 +29,6 @@
     <string name="received_sticker">received sticker</string>
     <string name="sender">Sender</string>
     <string name="time">Time</string>
+    <string name="map">Map</string>
+    <string name="parks">Parks</string>
 </resources>

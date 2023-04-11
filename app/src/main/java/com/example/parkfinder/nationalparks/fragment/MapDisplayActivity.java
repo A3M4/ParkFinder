@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -33,9 +34,27 @@ public class MapDisplayActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        initializeViews();
         initializeMapFragment();
 
         populateMap();
+    }
+
+    private void initializeViews() {
+        BottomNavigationView bottomNavigationView =
+                findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.maps_nav_button) {
+                navigateToMapFragment();
+                return true;
+            } else if (id == R.id.parks_nav_button) {
+                launchParksFragment();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void initializeMapFragment() {
@@ -74,5 +93,18 @@ public class MapDisplayActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+    }
+
+    private void navigateToMapFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.map, mapFragment);
+        transaction.commit();
+    }
+
+    private void launchParksFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.map, ParkDisplayFragment.newInstance());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

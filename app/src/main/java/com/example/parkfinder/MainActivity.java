@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.parkfinder.nationalparks.fragment.MapDisplayActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openNationalParks(View view) {
-        Intent parkIntent = new Intent(this, NationalParks.class);
+        Intent parkIntent = new Intent(this, MapDisplayActivity.class);
         startActivity(parkIntent);
     }
 }

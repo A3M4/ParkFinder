@@ -1,15 +1,22 @@
 package com.example.parkfinder.nationalparks.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.parkfinder.R;
 import com.example.parkfinder.nationalparks.pattern.Park;
+import com.example.parkfinder.nationalparks.pattern.ParkStateViewModel;
 import com.example.parkfinder.nationalparks.regulator.Repository;
+import com.example.parkfinder.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,13 +27,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapDisplayActivity extends AppCompatActivity implements
-        OnMapReadyCallback {
+        OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
+    private ParkStateViewModel parkStateViewModel;
     private List<Park> parkList;
+    private CardView cardView;
+    private EditText stateCodeEt;
     private String code = "wa";
     private SupportMapFragment mapFragment;
 
@@ -34,19 +45,30 @@ public class MapDisplayActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        parkStateViewModel = new ViewModelProvider(this)
+                .get(ParkStateViewModel.class);
 
         initializeViews();
         initializeMapFragment();
 
+        parkList = new ArrayList<>();
         populateMap();
     }
 
     private void initializeViews() {
+        cardView = findViewById();
+        stateCodeEt = findViewById();
+        ImageButton searchButton = findViewById();
+
         BottomNavigationView bottomNavigationView =
                 findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.maps_nav_button) {
+                if (cardView.getVisibility() == View.INVISIBLE ||
+                        cardView.getVisibility() == View.GONE) {
+                    cardView.setVisibility(View.VISIBLE);
+                }
                 navigateToMapFragment();
                 return true;
             } else if (id == R.id.parks_nav_button) {
@@ -54,6 +76,16 @@ public class MapDisplayActivity extends AppCompatActivity implements
                 return true;
             }
             return false;
+        });
+
+        searchButton.setOnClickListener(view -> {
+            String stateCode = stateCodeEt.getText().toString().trim();
+            if (!TextUtils.isEmpty(stateCode)) {
+                code = stateCode;
+                parkStateViewModel.selectCode(code);
+                populateMap();
+                stateCodeEt.setText("");
+            }
         });
     }
 
@@ -87,24 +119,47 @@ public class MapDisplayActivity extends AppCompatActivity implements
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5));
                 Log.d("Parks", "onMapReady: " + park.getFullName());
             }
+            parkStateViewModel.setSelectedParks(parkList);
+            Log.d("SIZE", "populateMap: " + parkList.size());
         }, code);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnInfoWindowClickListener(this);
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        cardView.setVisibility(View.GONE);
+        navigateToDetailsFragment(marker);
+    }
+
+    private void navigateToDetailsFragment(Marker marker) {
+        parkStateViewModel.setSelectedPark((Park) marker.getTag());
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.map, DetailsFragment.newInstance());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private void navigateToMapFragment() {
+        if (cardView.getVisibility() == View.INVISIBLE ||
+                cardView.getVisibility() == View.GONE) {
+            cardView.setVisibility(View.VISIBLE);
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.map, mapFragment);
         transaction.commit();
     }
 
     private void launchParksFragment() {
+        cardView.setVisibility(View.GONE);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.map, ParkDisplayFragment.newInstance());
         transaction.addToBackStack(null);
         transaction.commit();
     }
 }
+

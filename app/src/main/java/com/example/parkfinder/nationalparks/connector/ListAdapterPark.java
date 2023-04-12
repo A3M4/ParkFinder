@@ -1,7 +1,5 @@
 package com.example.parkfinder.nationalparks.connector;
 
-import static com.example.parkfinder.R.*;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.parkfinder.R.layout;
 import com.example.parkfinder.nationalparks.pattern.Park;
-import com.example.parkfinder.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

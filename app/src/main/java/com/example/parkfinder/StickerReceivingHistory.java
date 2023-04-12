@@ -53,6 +53,7 @@ public class StickerReceivingHistory extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        records.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             StickerRecord record = dataSnapshot.getValue(StickerRecord.class);
                             records.add(record);

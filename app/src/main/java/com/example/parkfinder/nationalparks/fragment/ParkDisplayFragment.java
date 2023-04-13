@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.parkfinder.R;
 import com.example.parkfinder.nationalparks.connector.ListAdapterPark;
 import com.example.parkfinder.nationalparks.connector.ParkClickResponder;
 import com.example.parkfinder.nationalparks.pattern.Park;
@@ -56,7 +57,7 @@ public class ParkDisplayFragment extends Fragment implements ParkClickResponder 
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_parks, container, false);
-        recyclerView = view.findViewById();
+        recyclerView = view.findViewById(R.id.park_recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ListAdapterPark listAdapterPark = new ListAdapterPark(parkList, this);

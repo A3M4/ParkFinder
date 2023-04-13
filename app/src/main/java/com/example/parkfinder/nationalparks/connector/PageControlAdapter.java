@@ -1,5 +1,6 @@
 package com.example.parkfinder.nationalparks.connector;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.parkfinder.R;
 import com.example.parkfinder.nationalparks.pattern.Images;
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +27,9 @@ public class PageControlAdapter extends RecyclerView.Adapter<PageControlAdapter.
     @Override
     public ImageScroller onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the layout for the view pager row item view.
-
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.view_pager_row, parent, false);
+        return new ImageScroller(view);
     }
 
     // Called by RecyclerView to display the data at the specified position.
@@ -53,7 +57,8 @@ public class PageControlAdapter extends RecyclerView.Adapter<PageControlAdapter.
         // Constructor
         public ImageScroller(@NonNull View itemView) {
             super(itemView);
-
+            // Get a reference to the ImageView within the view pager row item view.
+            imageView = itemView.findViewById(R.id.view_pager_imageview);
         }
     }
 }

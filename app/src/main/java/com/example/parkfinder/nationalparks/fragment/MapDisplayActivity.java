@@ -56,9 +56,9 @@ public class MapDisplayActivity extends AppCompatActivity implements
     }
 
     private void initializeViews() {
-        cardView = findViewById();
-        stateCodeEt = findViewById();
-        ImageButton searchButton = findViewById();
+        cardView = findViewById(R.id.cardview);
+        stateCodeEt = findViewById(R.id.floating_state_value_et);
+        ImageButton searchButton = findViewById(R.id.floating_search_button);
 
         BottomNavigationView bottomNavigationView =
                 findViewById(R.id.bottom_navigation);
@@ -79,6 +79,7 @@ public class MapDisplayActivity extends AppCompatActivity implements
         });
 
         searchButton.setOnClickListener(view -> {
+            HelperFunction.deactivateSoftInput(view);
             String stateCode = stateCodeEt.getText().toString().trim();
             if (!TextUtils.isEmpty(stateCode)) {
                 code = stateCode;
@@ -127,6 +128,7 @@ public class MapDisplayActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setInfoWindowAdapter(new InfoPanel(getApplicationContext()));
         mMap.setOnInfoWindowClickListener(this);
     }
 

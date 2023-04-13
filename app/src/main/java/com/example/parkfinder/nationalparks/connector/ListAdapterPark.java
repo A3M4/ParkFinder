@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.parkfinder.R.layout;
 import com.example.parkfinder.nationalparks.pattern.Park;
+import com.example.parkfinder.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class ListAdapterPark extends RecyclerView.Adapter<ListAdapterPark.ParkVi
     public ParkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the layout for the park row item view.
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(layout, parent, false);
+                .inflate(R.layout.park_row, parent, false);
         return new ParkViewHolder(view);
     }
 
@@ -76,7 +77,10 @@ public class ListAdapterPark extends RecyclerView.Adapter<ListAdapterPark.ParkVi
         public ParkViewHolder(@NonNull View itemView) {
             super(itemView);
             // Get references to the views within the park row item view.
-
+            parkImage = itemView.findViewById(R.id.row_park_imageview);
+            parkName = itemView.findViewById(R.id.row_par_name_textview);
+            parkType = itemView.findViewById(R.id.row_park_type_textview);
+            parkState = itemView.findViewById(R.id.row_part_state_textview);
             this.parkClickResponder = parkClickListener;
             itemView.setOnClickListener(this);
         }

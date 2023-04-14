@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.parkfinder.nationalparks.connector.HelperFunction;
+import com.example.parkfinder.nationalparks.connector.InfoPanel;
 import com.example.parkfinder.nationalparks.pattern.Park;
 import com.example.parkfinder.nationalparks.pattern.ParkStateViewModel;
 import com.example.parkfinder.nationalparks.regulator.Repository;

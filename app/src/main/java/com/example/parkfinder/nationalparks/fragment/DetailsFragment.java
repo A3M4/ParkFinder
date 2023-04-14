@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.parkfinder.R;
 import com.example.parkfinder.nationalparks.connector.PageControlAdapter;
 import com.example.parkfinder.nationalparks.pattern.ParkStateViewModel;
 
@@ -41,21 +42,21 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewPager = view.findViewById();
+        viewPager = view.findViewById(R.id.details_viewpager);
 
         ParkStateViewModel parkStateViewModel = new ViewModelProvider(requireActivity())
                 .get(ParkStateViewModel.class);
 
-        TextView parkName = view.findViewById();
-        TextView parkDes = view.findViewById();
-        TextView description = view.getRootView().findViewById();
-        TextView activities = view.getRootView().findViewById();
-        TextView entranceFees = view.getRootView().findViewById();
-        TextView opHours = view.getRootView().findViewById();
-        TextView detailsTopics = view.getRootView().findViewById();
-        TextView directions = view.getRootView().findViewById();
+        TextView parkName = view.findViewById(R.id.details_park_name);
+        TextView parkDes = view.findViewById(R.id.detailsf_park_designation);
+        TextView description = view.getRootView().findViewById(R.id.details_description);
+        TextView activities = view.getRootView().findViewById(R.id.details_activities);
+        TextView entranceFees = view.getRootView().findViewById(R.id.details_entrancefees);
+        TextView opHours = view.getRootView().findViewById(R.id.details_operatinghours);
+        TextView detailsTopics = view.getRootView().findViewById(R.id.details_topics);
+        TextView directions = view.getRootView().findViewById(R.id.details_directions);
 
-        parkStateViewModel.getSelectedPark().observe(this, park -> {
+        parkStateViewModel.getSelectedPark().observe(getViewLifecycleOwner(), park -> {
             curParkId = park.getId();
             curParkName = park.getName();
             parkName.setText(curParkName);
@@ -71,7 +72,7 @@ public class DetailsFragment extends Fragment {
             if (park.getEntranceFees().size() > 0) {
                 entranceFees.setText(String.format("Costs: $%s", park.getEntranceFees().get(0).getCost()));
             } else {
-                entranceFees.setText();
+                entranceFees.setText(R.string.info_unavailable);
             }
             StringBuilder opsString = new StringBuilder();
             opsString.append("MON: ").append(park.getOperatingHours().get(0).getStandardHours().getMonday()).append("\n")
@@ -90,7 +91,7 @@ public class DetailsFragment extends Fragment {
             if (!TextUtils.isEmpty(park.getDirectionsInfo())) {
                 directions.setText(park.getDirectionsInfo());
             } else {
-                directions.setText();
+                directions.setText(R.string.no_directions);
             }
             pageControlAdapter = new PageControlAdapter(park.getImages());
             viewPager.setAdapter(pageControlAdapter);
@@ -100,8 +101,8 @@ public class DetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate();
-        Button reviewBtn = view.findViewById();
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+        Button reviewBtn = view.findViewById(R.id.btn_reviews);
         reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

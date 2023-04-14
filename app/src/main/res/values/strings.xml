@@ -31,4 +31,23 @@
     <string name="time">Time</string>
     <string name="map">Map</string>
     <string name="parks">Parks</string>
+    <string name="hint_search">Enter State code: CA, WY, OR...</string>
+    <string name="reviews">Reviews</string>
+    <string name="textview">TextView</string>
+    <string name="operating_hours">Operating Hours</string>
+    <string name="no_directions">Directions not available</string>
+    <string name="info_unavailable">Info not available</string>
+    <string name="cur_park_name">Park Name</string>
+    <string name="write_review">Write review</string>
+    <string name="please_write_review_description">Share detail of your experience at this park here</string>
+    <string name="rate_for_this_park">Rate for this park</string>
+    <string name="write_review_content">Please write your review here</string>
+    <string name="your_name">Please enter your name here</string>
+    <string name="park">Park</string>
+    <string name="post">Post</string>
+    <string name="_0_0">0.0</string>
+    <string name="_0">(0)</string>
+    <string name="username">user name</string>
+    <string name="dd_mm_yyyy">dd/MM/yyyy</string>
+    <string name="content_of_review">content of review</string>
 </resources>

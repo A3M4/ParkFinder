@@ -1,4 +1,4 @@
-package com.example.parkfinder.nationalparks.fragment;
+package com.example.parkfinder.nationalparks.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -17,7 +17,6 @@ import com.example.parkfinder.nationalparks.connector.ListAdapterPark;
 import com.example.parkfinder.nationalparks.connector.ParkClickResponder;
 import com.example.parkfinder.nationalparks.pattern.Park;
 import com.example.parkfinder.nationalparks.pattern.ParkStateViewModel;
-import com.example.parkfinder.R;
 
 import java.util.ArrayList;
 import java.util.List;

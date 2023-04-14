@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package='com.example.parkfinder'>
+    package="com.example.parkfinder">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -21,10 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParkFinder"
         tools:targetApi="31">
+        <activity
+            android:name=".nationalparks.activity.WriteReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".nationalparks.activity.ReviewsActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".nationalparks.activity.MapDisplayActivity"
+            android:exported="true" />
         <activity
             android:name=".StickerReceivingHistory"
             android:exported="false" />

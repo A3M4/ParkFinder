@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.parkfinder.nationalparks.fragment.MapDisplayActivity;
+import com.example.parkfinder.nationalparks.activity.MapDisplayActivity;
 
 public class MainActivity extends AppCompatActivity {
 

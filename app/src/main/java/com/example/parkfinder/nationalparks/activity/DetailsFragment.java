@@ -1,8 +1,9 @@
-package com.example.parkfinder.nationalparks.fragment;
+package com.example.parkfinder.nationalparks.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class DetailsFragment extends Fragment {
     private ViewPager2 viewPager;
     private String curParkId;
     private String curParkName;
+    static final String DETAILS_FRAGMENT_TAG = "DETAILS_FRAGMENT";
 
 
     public DetailsFragment() {
@@ -106,21 +108,11 @@ public class DetailsFragment extends Fragment {
         reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent reviewsIntent = new Intent();
+                Intent reviewsIntent = new Intent(getActivity(), ReviewsActivity.class);
                 reviewsIntent.putExtra("curParkId", curParkId);
                 reviewsIntent.putExtra("curParkName", curParkName);
-                reviewsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(reviewsIntent);
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Intent reviewsIntent = new Intent(getActivity(), ReviewsActivity.class);
-//                        reviewsIntent.putExtra("curParkName", curParkName);
-//                        reviewsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(reviewsIntent);
-//
-//                    }
-//                }).start();
+                Log.d(DETAILS_FRAGMENT_TAG, curParkId + curParkName);
             }
         });
         return view;

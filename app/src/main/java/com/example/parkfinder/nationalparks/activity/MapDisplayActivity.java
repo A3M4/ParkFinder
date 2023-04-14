@@ -1,4 +1,4 @@
-package com.example.parkfinder.nationalparks.fragment;
+package com.example.parkfinder.nationalparks.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;

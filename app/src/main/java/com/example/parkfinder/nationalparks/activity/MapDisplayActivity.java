@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -159,7 +160,13 @@ public class MapDisplayActivity extends AppCompatActivity implements
                     mMap.setMyLocationEnabled(true);
                 }
             } else {
-                // Permission denied, handle the case where the user denies the location permission
+                // Permission denied, show an AlertDialog to inform the user
+                new AlertDialog.Builder(this)
+                        .setTitle("Location Permission Denied")
+                        .setMessage("Location permission is required for showing your current location on the map. To enable the permission, please go to Settings > Apps > YourAppName > Permissions and turn on the location permission.")
+                        .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                        .create()
+                        .show();
             }
         }
     }

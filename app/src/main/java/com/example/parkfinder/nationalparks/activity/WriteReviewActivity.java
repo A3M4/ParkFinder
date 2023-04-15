@@ -78,6 +78,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                 .push()
                 .setValue(curReview);
         Toast.makeText(this, "Post successfully.", Toast.LENGTH_SHORT).show();
+        // back to show the reviews
+        finish();
     }
 
     // when clicks the back button， asks before closing the activity

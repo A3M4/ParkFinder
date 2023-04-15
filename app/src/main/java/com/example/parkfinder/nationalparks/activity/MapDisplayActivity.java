@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
@@ -118,6 +119,7 @@ public class MapDisplayActivity extends AppCompatActivity implements
                                 .snippet(park.getStates());
 
                 Marker marker = mMap.addMarker(markerOptions);
+                assert marker != null;
                 marker.setTag(park);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5));
                 Log.d("Parks", "onMapReady: " + park.getFullName());
@@ -128,14 +130,14 @@ public class MapDisplayActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setInfoWindowAdapter(new InfoPanel(getApplicationContext()));
         mMap.setOnInfoWindowClickListener(this);
     }
 
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(@NonNull Marker marker) {
         cardView.setVisibility(View.GONE);
         navigateToDetailsFragment(marker);
     }

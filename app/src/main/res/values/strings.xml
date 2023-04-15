@@ -51,4 +51,12 @@
     <string name="dd_mm_yyyy">dd/MM/yyyy</string>
     <string name="content_of_review">content of review</string>
     <string name="team_6_final_project">Final Project: Park Finder</string>
+    <string name="state_s">State(s):</string>
+    <string name="park_designation">Park designation</string>
+    <string name="topics">Topics</string>
+    <string name="entrance_fees">Entrance Fees</string>
+    <string name="description">Description</string>
+    <string name="activities">Activities</string>
+    <string name="directions">Directions</string>
+    <string name="type">Type</string>
 </resources>

@@ -7,17 +7,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/white_cloud_sky"
     android:padding="8dp"
-    tools:context=".fragment.ParkDisplayFragment">
+    tools:context=".nationalparks.activity.ParkDisplayFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/park_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

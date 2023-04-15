@@ -13,6 +13,8 @@ public class Review {
         this.date = date;
     }
 
+    public Review(){}
+
     public String getUserName() {
         return userName;
     }

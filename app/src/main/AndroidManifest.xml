@@ -32,6 +32,7 @@
 
         <activity
             android:name=".nationalparks.activity.MapDisplayActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".StickerReceivingHistory"

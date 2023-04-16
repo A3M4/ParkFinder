@@ -75,6 +75,7 @@ public class DetailsFragment extends Fragment {
             curParkName = park.getName();
             parkName.setText(curParkName);
             parkDes.setText(park.getDesignation());
+            detailsRatingBar.setStepSize(0.1f);
             showRating();
             description.setText(park.getDescription());
             StringBuilder stringBuilder = new StringBuilder();

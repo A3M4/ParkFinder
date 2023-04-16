@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.parkfinder.R;
@@ -25,6 +26,9 @@ import java.util.List;
 public class ReviewsActivity extends AppCompatActivity {
     private String curParkName;
     private String curParkId;
+    private TextView tvTotalRatingScore;
+    private RatingBar rbTotalRatingBar;
+    private TextView tvTotalRatingNum;
 
     private DatabaseReference dbReference;
     private RecyclerView reviewsRecyclerView;
@@ -42,6 +46,11 @@ public class ReviewsActivity extends AppCompatActivity {
         TextView parkName = findViewById(R.id.curPark);
         parkName.setText(curParkName);
 
+        tvTotalRatingScore = findViewById(R.id.totalRatingScore);
+        rbTotalRatingBar = findViewById(R.id.totalRatingBar);
+        tvTotalRatingNum = findViewById(R.id.totalRatingNum);
+        rbTotalRatingBar.setStepSize(0.1f);
+
         reviewsRecyclerView = (RecyclerView) findViewById(R.id.reviews_recyclerview);
         reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         reviewsRecyclerView.setHasFixedSize(true);
@@ -58,9 +67,22 @@ public class ReviewsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 reviews.clear();
+                float totalRatingScore = 0;
+                int totalRatingNum = 0;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Review review = dataSnapshot.getValue(Review.class);
                     reviews.add(review);
+                    assert review != null;
+                    totalRatingScore += review.getRating();
+                    totalRatingNum += 1;
+                }
+
+                // counts the average rating for current park
+                if (totalRatingNum != 0) {
+                    float avgRatingScore = totalRatingScore / totalRatingNum;
+                    tvTotalRatingScore.setText(String.format("%.1f", avgRatingScore));
+                    tvTotalRatingNum.setText("(" + totalRatingNum + ")");
+                    rbTotalRatingBar.setRating(avgRatingScore);
                 }
                 reviewAdapter.notifyDataSetChanged();
             }

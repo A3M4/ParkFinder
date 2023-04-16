@@ -153,28 +153,42 @@ public class MapDisplayActivity extends AppCompatActivity implements
         mMap.setOnInfoWindowClickListener(this);
 
         // Enable user location
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
         } else {
             mMap.setMyLocationEnabled(true);
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED
+                        || ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED) {
                     mMap.setMyLocationEnabled(true);
                 }
             } else {
                 // Permission denied, show an AlertDialog to inform the user
                 new AlertDialog.Builder(this)
                         .setTitle("Location Permission Denied")
-                        .setMessage("Location permission is required for showing your current location on the map. To enable the permission, please go to Settings > Apps > YourAppName > Permissions and turn on the location permission.")
+                        .setMessage(
+                                "Location permission is required for showing your current " +
+                                        "location on the map. To enable the permission, please go" +
+                                        " to Settings > Apps > YourAppName > Permissions and turn" +
+                                        " on the location permission.")
                         .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
                         .create()
                         .show();
@@ -215,23 +229,31 @@ public class MapDisplayActivity extends AppCompatActivity implements
     }
 
     private void setParksInUserStateInitialView() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
         } else {
             // Get the user's current location
-            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            LocationManager locationManager =
+                    (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Location myLocation =
+                    locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (myLocation == null) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        // Get the user's state code when location data becomes available
-                        String stateCode = getStateCode(location);
-                        locationManager.removeUpdates(this);
-                        code = getStateCode(stateCode);
-                    }
-                });
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+                        new LocationListener() {
+                            @Override
+                            public void onLocationChanged(Location location) {
+                                // Get the user's state code when location data becomes available
+                                String stateCode = getStateCode(location);
+                                locationManager.removeUpdates(this);
+                                code = getStateCode(stateCode);
+                            }
+                        });
             } else {
                 // Get the user's state code from the location data
                 String stateCode = getStateCode(myLocation);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_details"
     android:layout_width="match_parent"
@@ -38,6 +39,70 @@
                 android:textAlignment="center"
                 android:textColor="@color/text_color_paragraph"
                 android:text="@string/textview" />
+
+            <RelativeLayout
+                android:id="@+id/totalRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+
+                    <RatingBar
+                        android:id="@+id/detailsRatingBar"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:progressTint="#FFC107"
+                        android:secondaryProgressTint="#FFC107" />
+
+                    <TextView
+                        android:id="@+id/detailsRatingNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="13sp"
+                        android:layout_marginStart="25dp"
+                        android:text="@string/_0_0_" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/goToReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal"
+                    android:clickable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/reviews"
+                        android:textSize="15sp"
+                        android:textColor="@color/purple_700"
+                        android:clickable="false"
+                        android:gravity="center_vertical" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_marginEnd="6dp"
+                        android:clickable="false"
+                        android:src="@drawable/baseline_chevron_right_40"
+                        app:tint="@color/purple_700" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/details_viewpager"
@@ -180,19 +245,9 @@
                 android:paddingLeft="6dp"
                 android:layout_marginTop="4dp"
                 android:text="@string/directions"
-                android:paddingBottom="20dp"
+                android:paddingBottom="70dp"
                 android:textColor="@color/text_color_paragraph"
                 android:textAlignment="textStart" />
-
-            <Button
-                android:id="@+id/btn_reviews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/reviews"
-                android:textSize="18sp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:layout_marginBottom="70dp" />
 
         </LinearLayout>
 

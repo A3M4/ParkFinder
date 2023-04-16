@@ -54,10 +54,12 @@ public class WriteReviewActivity extends AppCompatActivity {
     public void postReview(View view) {
         // handles empty values
         if (userRatingBar.getRating() == 0) {
-            Toast.makeText(this, "Please add a rating at the rating bar!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please add a rating at the rating bar!", Toast.LENGTH_LONG)
+                    .show();
             return;
         }
-        if (reviewContent.getText() == null || reviewContent.getText().toString().trim().equals("")) {
+        if (reviewContent.getText() == null ||
+                reviewContent.getText().toString().trim().equals("")) {
             Toast.makeText(this, "Please write a review content.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -74,7 +76,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         // adds review to database, path: reviews/parkId+parkName/autoUid/Review
         databaseReference.child("reviews")
-                .child(curParkId+curParkName)
+                .child(curParkId + curParkName)
                 .push()
                 .setValue(curReview);
         Toast.makeText(this, "Post successfully.", Toast.LENGTH_SHORT).show();

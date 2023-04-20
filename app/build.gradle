@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('/Users/Sabrina/Documents/NEU/5520 mobile/Project/keystore/projectkeystore3')
+            keyAlias 'key3'
+            storePassword 'myPassoword'
+            keyPassword 'myPassoword'
+        }
+    }
     namespace 'com.example.parkfinder'
     compileSdk 33
 
@@ -21,6 +29,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {

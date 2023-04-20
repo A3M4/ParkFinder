@@ -180,18 +180,6 @@ public class MapDisplayActivity extends AppCompatActivity implements
                         PackageManager.PERMISSION_GRANTED) {
                     mMap.setMyLocationEnabled(true);
                 }
-            } else {
-                // Permission denied, show an AlertDialog to inform the user
-                new AlertDialog.Builder(this)
-                        .setTitle("Location Permission Denied")
-                        .setMessage(
-                                "Location permission is required for showing your current " +
-                                        "location on the map. To enable the permission, please go" +
-                                        " to Settings > Apps > YourAppName > Permissions and turn" +
-                                        " on the location permission.")
-                        .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
-                        .create()
-                        .show();
             }
         }
     }

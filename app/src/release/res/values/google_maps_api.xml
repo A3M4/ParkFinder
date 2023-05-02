@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--The API key has been deleted to avoid surcharge since the project has been graded-->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCO-jTsotw86GhRV6_uQNKAGRdz6IOKSUI</string>
 </resources>
